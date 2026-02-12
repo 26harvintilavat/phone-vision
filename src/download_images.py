@@ -45,13 +45,13 @@ class APIBasedScraper:
             'duplicates': 0
         }
         
-        print("🔑 API Status:")
-        print(f"  Pexels: {'✅ Configured' if self.pexels_api_key else '❌ Not configured'}")
-        print(f"  Unsplash: {'✅ Configured' if self.unsplash_access_key else '❌ Not configured'}")
+        print(" API Status:")
+        print(f"  Pexels: {' Configured' if self.pexels_api_key else ' Not configured'}")
+        print(f"  Unsplash: {' Configured' if self.unsplash_access_key else ' Not configured'}")
         
         if not self.pexels_api_key and not self.unsplash_access_key:
-            print("\n⚠️  NO API KEYS FOUND!")
-            print("📝 To use this scraper:")
+            print("\n  NO API KEYS FOUND!")
+            print(" To use this scraper:")
             print("1. Get free API key from https://www.pexels.com/api/")
             print("2. Get free API key from https://unsplash.com/developers")
             print("3. Set environment variables:")
@@ -134,12 +134,12 @@ class APIBasedScraper:
                     if img_url:
                         urls.append(img_url)
                 
-                print(f"    ✓ Found {len(urls)} images from Pexels")
+                print(f"     Found {len(urls)} images from Pexels")
             else:
-                print(f"    ⚠️  Pexels API error: {response.status_code}")
+                print(f"      Pexels API error: {response.status_code}")
         
         except Exception as e:
-            print(f"    ⚠️  Pexels error: {str(e)[:60]}")
+            print(f"      Pexels error: {str(e)[:60]}")
         
         return urls
     
@@ -148,7 +148,7 @@ class APIBasedScraper:
         if not self.unsplash_access_key:
             return []
         
-        print(f"  🔍 Searching Unsplash...")
+        print(f"   Searching Unsplash...")
         urls = []
         
         try:
@@ -168,19 +168,19 @@ class APIBasedScraper:
                     if img_url:
                         urls.append(img_url)
                 
-                print(f"    ✓ Found {len(urls)} images from Unsplash")
+                print(f"     Found {len(urls)} images from Unsplash")
             else:
-                print(f"    ⚠️  Unsplash API error: {response.status_code}")
+                print(f"      Unsplash API error: {response.status_code}")
         
         except Exception as e:
-            print(f"    ⚠️  Unsplash error: {str(e)[:60]}")
+            print(f"      Unsplash error: {str(e)[:60]}")
         
         return urls
     
     def scrape_phone_model(self, brand: str, model: str, target_images: int = 100):
         """Scrape images for a phone model"""
         print(f"\n{'='*70}")
-        print(f"📱 {brand} {model}")
+        print(f" {brand} {model}")
         print(f"{'='*70}")
         
         model_name = f"{brand}_{model.replace(' ', '_').replace('/', '_')}"
@@ -196,7 +196,7 @@ class APIBasedScraper:
         
         all_urls = []
         
-        print("🔍 Collecting image URLs from APIs...")
+        print(" Collecting image URLs from APIs...")
         for query in queries:
             # Pexels
             pexels_urls = self.search_pexels(query, per_page=30)
@@ -209,15 +209,15 @@ class APIBasedScraper:
             time.sleep(1)
         
         all_urls = list(set(all_urls))
-        print(f"\n📊 Total unique URLs: {len(all_urls)}")
+        print(f"\nTotal unique URLs: {len(all_urls)}")
         
         if len(all_urls) == 0:
-            print("⚠️  No images found. Check API keys!")
+            print("  No images found. Check API keys!")
             return 0
         
         # Download
         downloaded = 0
-        print(f"\n⬇️  Downloading images (target: {target_images})...")
+        print(f"\n⬇ Downloading images (target: {target_images})...")
         
         for i, url in enumerate(all_urls):
             if downloaded >= target_images:
@@ -237,12 +237,12 @@ class APIBasedScraper:
             
             time.sleep(0.3)
         
-        print(f"\n✅ Downloaded {downloaded} images")
+        print(f"\nDownloaded {downloaded} images")
         return downloaded
     
     def split_dataset(self, train_ratio=0.7, val_ratio=0.15, test_ratio=0.15):
         """Split dataset"""
-        print("\n📂 Splitting dataset...")
+        print("\n Splitting dataset...")
         
         model_dirs = [d for d in self.raw_dir.iterdir() if d.is_dir()]
         
@@ -273,19 +273,19 @@ class APIBasedScraper:
                 
                 shutil.copy2(img_path, dest_dir / img_path.name)
             
-            print(f"  ✓ {model_name}: {n_train} train, {n_val} val, {n_images - n_train - n_val} test")
+            print(f"   {model_name}: {n_train} train, {n_val} val, {n_images - n_train - n_val} test")
     
     def print_summary(self, duration: float):
         """Print summary"""
         print(f"\n{'='*70}")
-        print("🎉 SCRAPING COMPLETE!")
+        print(" SCRAPING COMPLETE!")
         print(f"{'='*70}")
-        print(f"⏱️  Time: {duration/60:.1f} minutes")
-        print(f"🎯 Attempted: {self.stats['total_attempted']}")
-        print(f"✅ Successful: {self.stats['successful']}")
-        print(f"❌ Failed: {self.stats['failed']}")
-        print(f"🔄 Duplicates: {self.stats['duplicates']}")
-        print(f"💾 Output: {self.output_dir.absolute()}")
+        print(f"  Time: {duration/60:.1f} minutes")
+        print(f" Attempted: {self.stats['total_attempted']}")
+        print(f" Successful: {self.stats['successful']}")
+        print(f" Failed: {self.stats['failed']}")
+        print(f" Duplicates: {self.stats['duplicates']}")
+        print(f" Output: {self.output_dir.absolute()}")
         print(f"{'='*70}\n")
 
 
@@ -305,8 +305,8 @@ def main():
         {'brand': 'Apple', 'model': 'iPhone 13'},
     ]
     
-    print("🚀 PhoneVision API-Based Scraper (Most Reliable)")
-    print(f"📱 Models: {len(phone_models)}\n")
+    print(" PhoneVision API-Based Scraper (Most Reliable)")
+    print(f" Models: {len(phone_models)}\n")
     
     start_time = datetime.now()
     
@@ -330,8 +330,8 @@ def main():
     scraper.print_summary(duration)
     
     if total == 0:
-        print("\n❌ NO IMAGES DOWNLOADED!")
-        print("\n📝 SOLUTIONS:")
+        print("\n NO IMAGES DOWNLOADED!")
+        print("\nSOLUTIONS:")
         print("1. Get free Pexels API key: https://www.pexels.com/api/")
         print("2. Get free Unsplash API key: https://unsplash.com/developers")
         print("3. Set environment variables with your keys")
