@@ -1,0 +1,15 @@
+venv/
+__pycache__/
+
+# data
+data/
+
+# YOLO weights
+*.pt
+*.pth
+*.onxx
+*.engine
+
+# OS files
+.DS_Store
+Thumbs.db
